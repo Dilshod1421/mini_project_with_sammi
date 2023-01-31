@@ -1,1 +1,21 @@
-<h1>Register</h1>
+<div class="w-50 mx-auto">
+    <form action="/register" method="POST">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="firstname" id="first" placeholder="First name">
+            <label for="first">First name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="lastname" id="last" placeholder="Last name">
+            <label for="last">Last name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+        </div>
+        <button type="submit" class="btn btn-success mt-3">Sign up</button>
+    </form>
+</div>

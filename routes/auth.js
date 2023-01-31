@@ -21,4 +21,12 @@ router.get('/register', (req, res) => {
     });
 });
 
+router.post('/login', (req, res) => {
+    res.redirect('/');
+});
+
+router.post('/register', (req, res) => {
+    res.redirect('/login');
+});
+
 export default router;
