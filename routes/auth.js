@@ -1,8 +1,10 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/User.js';
+
 const router = Router();
 
+//=========================== GET =================================================
 router.get('/', (req, res) => {
     res.render('index', {
         title: 'Shop | AbuDev'
@@ -12,31 +14,61 @@ router.get('/', (req, res) => {
 router.get('/login', (req, res) => {
     res.render('login', {
         title: 'Login | AbuDev',
-        isLogin: true
+        isLogin: true,
+        loginError: req.flash('loginError')
     });
 });
 
 router.get('/register', (req, res) => {
     res.render('register', {
         title: 'Register | AbuDev',
-        isRegister: true
+        isRegister: true,
+        registerError: req.flash('registerError')
     });
 });
 
+//============================= POST ===============================================
 router.post('/login', async (req, res) => {
-    const existUser = await User.findOne({ email: req.body.email });
-    if (!existUser) { console.log('User not found'); return }
-    const isPswEqual = await bcrypt.compare(req.body.password, existUser.password);
-    if (!isPswEqual) { console.log('Password wrong'); return }
+
+    let { email, password } = req.body;
+    if (!email || !password) {
+        req.flash('loginError', 'All fields are required!');
+        res.redirect('/login');
+        return;
+    };
+    const existUser = await User.findOne({ email });
+    if (!existUser) {
+        req.flash('loginError', 'User not found!')
+        res.redirect('/login');
+        return;
+    };
+    const isPswEqual = await bcrypt.compare(password, existUser.password);
+    if (!isPswEqual) {
+        req.flash('loginError', 'Password wrong!');
+        res.redirect('/login');
+        return;
+    };
     res.redirect('/');
 });
 
 router.post('/register', async (req, res) => {
-    const hashedPsw = await bcrypt.hash(req.body.password, 10)
+    let { firstname, lastname, email, password } = req.body;
+    if (!email || !password || !email || !password) {
+        req.flash('registerError', 'All fields are required');
+        res.redirect('/register');
+        return;
+    };
+    const candidate = await User.findOne({ email });
+    if (candidate) {
+        req.flash('registerError', 'User already exists');
+        res.redirect('/register');
+        return;
+    };
+    const hashedPsw = await bcrypt.hash(password, 10)
     const userData = {
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        email: req.body.email,
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
         password: hashedPsw
     };
     const user = await User.create(userData);

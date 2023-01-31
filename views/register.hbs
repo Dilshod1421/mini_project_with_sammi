@@ -1,4 +1,11 @@
 <div class="w-50 mx-auto">
+    {{#if registerError}}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Error!</strong>
+        {{registerError}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
     <form action="/register" method="POST">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" name="firstname" id="first" placeholder="First name">
