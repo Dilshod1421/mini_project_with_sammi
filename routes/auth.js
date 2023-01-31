@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/User.js';
+import { generateJWT } from '../services/token.js';
 
 const router = Router();
 
@@ -48,6 +49,8 @@ router.post('/login', async (req, res) => {
         res.redirect('/login');
         return;
     };
+    const token = generateJWT(existUser._id);
+    res.cookie('token', token, { httpOnly: true, secure: true });
     res.redirect('/');
 });
 
@@ -72,6 +75,8 @@ router.post('/register', async (req, res) => {
         password: hashedPsw
     };
     const user = await User.create(userData);
+    const token = generateJWT(user._id);
+    res.cookie('token', token, { httpOnly: true, secure: true });
     res.redirect('/login');
 });
 
