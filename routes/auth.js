@@ -8,13 +8,13 @@ const router = Router();
 //=========================== GET =================================================
 router.get('/', (req, res) => {
     res.render('index', {
-        title: 'Shop | AbuDev'
+        title: 'AbuDev | Shop'
     });
 });
 
 router.get('/login', (req, res) => {
     res.render('login', {
-        title: 'Login | AbuDev',
+        title: 'AbuDev | Login',
         isLogin: true,
         loginError: req.flash('loginError')
     });
@@ -22,7 +22,7 @@ router.get('/login', (req, res) => {
 
 router.get('/register', (req, res) => {
     res.render('register', {
-        title: 'Register | AbuDev',
+        title: 'AbuDev | Register',
         isRegister: true,
         registerError: req.flash('registerError')
     });

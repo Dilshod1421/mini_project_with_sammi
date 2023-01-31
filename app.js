@@ -5,6 +5,8 @@ import session from 'express-session';
 import { create } from 'express-handlebars';
 import AuthRoutes from './routes/auth.js';
 import ProductsRoutes from './routes/products.js';
+import cookieParser from 'cookie-parser';
+import logoutMiddleware from './middleware/logout.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -21,8 +23,10 @@ app.set('views', './views');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 app.use(session({ secret: 'AbuDev', resave: false, saveUninitialized: false }));
 app.use(flash());
+app.use(logoutMiddleware);
 
 app.use(AuthRoutes);
 app.use(ProductsRoutes);

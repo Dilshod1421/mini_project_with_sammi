@@ -3,14 +3,14 @@ const router = Router();
 
 router.get('/add', (req, res) => {
     res.render('add', {
-        title: 'Add | AbuDev',
+        title: 'AbuDev | Add',
         isAdd: true
     });
 });
 
 router.get('/products', (req, res) => {
     res.render('products', {
-        title: 'Products | AbuDev',
+        title: 'AbuDev | Products',
         isProducts: true
     });
 });
