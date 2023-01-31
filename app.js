@@ -1,4 +1,5 @@
 import express from 'express';
+import mongoose from 'mongoose';
 import { create } from 'express-handlebars';
 import AuthRoutes from './routes/auth.js';
 import ProductsRoutes from './routes/products.js';
@@ -14,11 +15,25 @@ const hbs = create({
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', './views');
+
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(AuthRoutes);
 app.use(ProductsRoutes);
 
-const port = process.env.PORT || 1212;
-app.listen(port, () => console.log(`Server listening on ${port}`));
+const startApp = () => {
+    try {
+        mongoose.set('strictQuery', false);
+        mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true }, console.log("Mongo DB connected"));
+
+        const port = process.env.PORT || 1212;
+        app.listen(port, () => console.log(`Server listening on ${port}`));
+    }
+    catch (err) {
+        console.log(err);
+    }
+};
+
+startApp();
