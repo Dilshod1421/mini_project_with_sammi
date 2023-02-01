@@ -3,13 +3,16 @@ import bcrypt from 'bcrypt';
 import User from '../models/User.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 import { generateJWT } from '../services/token.js';
+import Product from '../models/Product.js';
 
 const router = Router();
 
 //=========================== GET =================================================
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    const products = await Product.find().lean();
     res.render('index', {
-        title: 'AbuDev | Shop'
+        title: 'AbuDev | Shop',
+        products: products
     });
 });
 
