@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import Product from '../models/Product.js';
 const router = Router();
 
 router.get('/add', (req, res) => {
@@ -13,6 +14,12 @@ router.get('/products', (req, res) => {
         title: 'AbuDev | Products',
         isProducts: true
     });
+});
+
+router.post('/add-products', async (req, res) => {
+    const { title, description, image, price } = req.body;
+    const product = await Product.create(req.body);
+    res.redirect('/');
 });
 
 export default router;
