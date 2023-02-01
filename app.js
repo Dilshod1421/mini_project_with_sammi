@@ -7,14 +7,13 @@ import AuthRoutes from './routes/auth.js';
 import ProductsRoutes from './routes/products.js';
 import cookieParser from 'cookie-parser';
 import logoutMiddleware from './middleware/logoutMiddleware.js';
+import userMiddleware from './middleware/userMiddleware.js';
+import ifEqual from './utils/app.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const hbs = create({
-    defaultLayout: 'main',
-    extname: 'hbs'
-});
+const hbs = create({ defaultLayout: 'main', extname: 'hbs', helpers: ifEqual });
 
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
@@ -27,6 +26,7 @@ app.use(cookieParser());
 app.use(session({ secret: 'AbuDev', resave: false, saveUninitialized: false }));
 app.use(flash());
 app.use(logoutMiddleware);
+app.use(userMiddleware);
 
 app.use(AuthRoutes);
 app.use(ProductsRoutes);

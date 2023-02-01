@@ -12,7 +12,8 @@ router.get('/', async (req, res) => {
     const products = await Product.find().lean();
     res.render('index', {
         title: 'AbuDev | Shop',
-        products: products
+        products: products.reverse(),
+        userId: req.userId ? req.userId.toString() : null
     });
 });
 

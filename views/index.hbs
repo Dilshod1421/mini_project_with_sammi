@@ -2,8 +2,8 @@
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
     {{#each products}}
     <div class="col">
-        <div class="card shadow-sm">
-            <img src="{{image}}" height="300px"/>
+        <div class="card shadow-sm rounded-5 mb-3">
+            <img src="{{image}}" />
             <div class="card-body">
                 <p class="card-text fw-bold fs-5">{{title}}</p>
                 <div class="d-flex justify-content-end align-items-center">
@@ -13,8 +13,12 @@
             <div class="card-footer">
                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                     <button type="button" class="btn btn-outline-primary">Details</button>
+                    {{#if @root.token}}
+                    {{#ifequal user @root.userId}}
                     <button type="button" class="btn btn-outline-secondary">Edit</button>
                     <button type="button" class="btn btn-outline-danger">Delete</button>
+                    {{/ifequal}}
+                    {{/if}}
                 </div>
             </div>
         </div>
