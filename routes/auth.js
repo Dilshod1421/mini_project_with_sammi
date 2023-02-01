@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcrypt';
 import User from '../models/User.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 import { generateJWT } from '../services/token.js';
 
 const router = Router();
@@ -17,11 +18,7 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
-router.get('/login', (req, res) => {
-    if (req.cookies.token) {
-        res.redirect('/');
-        return;
-    }
+router.get('/login', authMiddleware, (req, res) => {
     res.render('login', {
         title: 'AbuDev | Login',
         isLogin: true,
@@ -29,11 +26,7 @@ router.get('/login', (req, res) => {
     });
 });
 
-router.get('/register', (req, res) => {
-    if (req.cookies.token) {
-        res.redirect('/');
-        return;
-    }
+router.get('/register', authMiddleware, (req, res) => {
     res.render('register', {
         title: 'AbuDev | Register',
         isRegister: true,

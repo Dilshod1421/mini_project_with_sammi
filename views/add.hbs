@@ -1,5 +1,12 @@
 <div class="w-50 mx-auto">
     <p class="fs-1">Add products</p>
+    {{#if addProductsError}}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Error!</strong>
+        {{addProductsError}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
     <form action="/add-products" method="POST">
         <div class="form-floating mb-3">
             <input type="text" class="form-control" name="title" id="title" placeholder="Title">

@@ -6,7 +6,7 @@ import { create } from 'express-handlebars';
 import AuthRoutes from './routes/auth.js';
 import ProductsRoutes from './routes/products.js';
 import cookieParser from 'cookie-parser';
-import logoutMiddleware from './middleware/logout.js';
+import logoutMiddleware from './middleware/logoutMiddleware.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
