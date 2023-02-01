@@ -93,4 +93,8 @@ router.post('/register', async (req, res) => {
     res.redirect('/login');
 });
 
+router.post('/add-products', (req, res) => {
+    res.redirect('/');
+});
+
 export default router;
