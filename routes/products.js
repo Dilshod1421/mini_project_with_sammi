@@ -4,6 +4,15 @@ import productMiddleware from '../middleware/productMiddleware.js';
 import userMiddleware from '../middleware/userMiddleware.js';
 const router = Router();
 
+router.get('/', async (req, res) => {
+    const products = await Product.find().lean();
+    res.render('index', {
+        title: 'AbuDev | Shop',
+        products: products.reverse(),
+        userId: req.userId ? req.userId.toString() : null
+    });
+});
+
 router.get('/add', productMiddleware, (req, res) => {
     res.render('add', {
         title: 'AbuDev | Add',
@@ -21,6 +30,15 @@ router.get('/products', async (req, res) => {
         myProducts: myProducts
     });
 });
+
+router.get('/product/:id', async (req, res) => {
+    const id = req.params.id;
+    const product = await Product.findById(id).populate('user').lean();
+    res.render('detailProduct', {
+        title: 'AbuDev | Product details',
+        product: product
+    });
+})
 
 router.post('/add-products', userMiddleware, async (req, res) => {
     const { title, description, image, price } = req.body;

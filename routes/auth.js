@@ -3,19 +3,8 @@ import bcrypt from 'bcrypt';
 import User from '../models/User.js';
 import authMiddleware from '../middleware/authMiddleware.js';
 import { generateJWT } from '../services/token.js';
-import Product from '../models/Product.js';
 
 const router = Router();
-
-//=========================== GET =================================================
-router.get('/', async (req, res) => {
-    const products = await Product.find().lean();
-    res.render('index', {
-        title: 'AbuDev | Shop',
-        products: products.reverse(),
-        userId: req.userId ? req.userId.toString() : null
-    });
-});
 
 router.get('/logout', (req, res) => {
     res.clearCookie('token');
@@ -38,7 +27,6 @@ router.get('/register', authMiddleware, (req, res) => {
     });
 });
 
-//============================= POST ===============================================
 router.post('/login', async (req, res) => {
 
     let { email, password } = req.body;
