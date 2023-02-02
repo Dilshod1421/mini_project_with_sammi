@@ -8,12 +8,12 @@ import ProductsRoutes from './routes/products.js';
 import cookieParser from 'cookie-parser';
 import logoutMiddleware from './middleware/logoutMiddleware.js';
 import userMiddleware from './middleware/userMiddleware.js';
-import ifEqual from './utils/app.js';
+import hbsheplers from './utils/app.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-const hbs = create({ defaultLayout: 'main', extname: 'hbs', helpers: ifEqual });
+const hbs = create({ defaultLayout: 'main', extname: 'hbs', helpers: hbsheplers });
 
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
