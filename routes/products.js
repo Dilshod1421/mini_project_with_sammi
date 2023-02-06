@@ -40,6 +40,12 @@ router.get('/product/:id', async (req, res) => {
     });
 })
 
+router.get('/edit-product/:id', async (req, res) => {
+    res.render('editProduct', {
+        title: 'AbuDev | Edit product',
+    },);
+});
+
 router.post('/add-products', userMiddleware, async (req, res) => {
     const { title, description, image, price } = req.body;
     if (!title || !description || !image || !price) {
