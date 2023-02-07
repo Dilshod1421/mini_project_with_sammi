@@ -8,7 +8,7 @@ const router = Router();
 
 router.get('/logout', (req, res) => {
     res.clearCookie('token');
-    res.redirect('/');
+    res.redirect('/login');
 });
 
 router.get('/login', authMiddleware, (req, res) => {
