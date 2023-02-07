@@ -40,11 +40,27 @@ router.get('/product/:id', async (req, res) => {
     });
 })
 
-router.get('/edit-product/:id', async (req, res) => {
+router.get('/editProduct/:id', async (req, res) => {
+    const id = req.params.id;
+    const product = await Product.findById(id).populate('user').lean();
     res.render('editProduct', {
         title: 'AbuDev | Edit product',
-    },);
+        product: product,
+        editProductError: req.flash('editProductError')
+    });
 });
+
+router.post('/edit-product/:id', async (req, res) => {
+    const { title, description, image, price } = req.body;
+    const id = req.params.id;
+    if (!title || !description || !image || !price) {
+        req.flash('editProductError', 'All fields are required');
+        res.redirect(`/editProduct/${id}`);
+        return;
+    };
+    await Product.findByIdAndUpdate(id, req.body, { new: true });
+    res.redirect('/products');
+})
 
 router.post('/add-products', userMiddleware, async (req, res) => {
     const { title, description, image, price } = req.body;
